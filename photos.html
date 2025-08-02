@@ -2,76 +2,11 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Page 6 - Galerie</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Indie Flower', cursive;
-      background-color: #e8d8ff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding-top: 60px;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    .heart {
-      position: absolute;
-      font-size: 24px;
-      color: red;
-      animation: float 10s infinite ease-in-out;
-    }
-
-    .heart1  { animation-delay: 0s; }
-    .heart2  { animation-delay: 0.2s; }
-    .heart3  { animation-delay: 0.4s; }
-    .heart4  { animation-delay: 0.6s; }
-    .heart5  { animation-delay: 0.8s; }
-    .heart6  { animation-delay: 1s; }
-    .heart7  { animation-delay: 1.2s; }
-    .heart8  { animation-delay: 1.4s; }
-    .heart9  { animation-delay: 1.6s; }
-    .heart10 { animation-delay: 1.8s; }
-    .heart11 { animation-delay: 2s; }
-    .heart12 { animation-delay: 2.2s; }
-    .heart13 { animation-delay: 2.4s; }
-    .heart14 { animation-delay: 2.6s; }
-    .heart15 { animation-delay: 2.8s; }
-
-    @keyframes float {
-      0% { transform: translateY(0); opacity: 1; }
-      50% { transform: translateY(-20px); opacity: 0.7; }
-      100% { transform: translateY(0); opacity: 1; }
-    }
-
-    h1 {
-      color: #d81b60;
-      margin-bottom: 30px;
-    }
-
-    .galerie {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      width: 90%;
-      max-width: 1000px;
-      z-index: 10;
-    }
-
-    .galerie img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 15px;
-      border: 2px solid #333;
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+  
 </head>
 <body>
   <!-- Cœurs décoratifs -->
@@ -92,26 +27,54 @@
   <div class="heart heart15" style="top: 90%; left: 85%;">❤️</div>
 
   <h1>📷 Galerie de souvenirs</h1>
-  <div class="galerie">
-    <img src="img/photo1.jpg" alt="Souvenir 1">
-    <img src="img/photo2.jpg" alt="Souvenir 2">
-    <img src="img/photo3.jpg" alt="Souvenir 3">
-    <img src="img/photo4.jpg" alt="Souvenir 4">
+  <input type="file" id="upload" accept="image/*">
+  <div class="galerie" id="galerie">
+    <img src="Img/photo (1).jpg" alt="Souvenir 1">
+    <img src="Img/photo (2).jpg" alt="Souvenir 2">
+    <img src="Img/photo (3).jpg" alt="Souvenir 3">
+    <img src="Img/photo (4).jpg" alt="Souvenir 4">
+    <img src="Img/photo (5).jpg" alt="Souvenir 5">
+    <img src="Img/photo (6).jpg" alt="Souvenir 6">
+    <img src="Img/photo (7).jpg" alt="Souvenir 7">
+    <img src="Img/photo (8).jpg" alt="Souvenir 8">
+    <img src="Img/photo (9).jpg" alt="Souvenir 9">
+    <img src="Img/photo (10).jpg" alt="Souvenir 10">
+    <img src="Img/couple.jpg" alt="Souvenir 11">
   </div>
+  
+  <br>
+  <a href="javascript:history.back()" style="
+  margin-top: 30px;
+  background-color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #333;
+  border: 2px solid #333;
+  z-index: 10;
+  position: relative;
+  display: inline-block;
+  ">← Retour</a>
 
-    <br>
-    <a href="javascript:history.back()" style="
-    margin-top: 30px;
-    background-color: #fff;
-    padding: 10px 20px;
+  <!-- Lightbox -->
+  <div id="lightbox" style="
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="agrandie" style="
+    max-width: 90%;
+    max-height: 90%;
     border-radius: 10px;
-    text-decoration: none;
-    color: #333;
-    border: 2px solid #333;
-    z-index: 10;
-    position: relative;
-    display: inline-block;
-    ">← Retour</a>
-
+    box-shadow: 0 0 15px #000;
+  ">
+  <script src="js/script.js"></script>
+</div>
 </body>
 </html>

@@ -1,0 +1,12 @@
+# fichiers système
+.DS_Store
+Thumbs.db
+
+# fichiers XAMPP ou temporaires
+*.log
+*.tmp
+
+# node ou autres (au cas où)
+node_modules/
+dist/
+.env
