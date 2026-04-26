@@ -1,42 +1,56 @@
 const codeSecret = "0711";
 let code = "";
 
-function appendNumber(num) {
+document.addEventListener("DOMContentLoaded", () => {
+
+  const result = document.getElementById("result");
+  const dotsDisplay = document.getElementById("dotsDisplay");
+  const galerie = document.getElementById("galerie");
+  const upload = document.getElementById("upload");
+
+  function appendNumber(num) {
     if (code.length < 8) {
-    code += num;
-    updateDotsDisplay();
-}
-}
-
-function clearCode() {
-    code = "";
-    document.getElementById("result").textContent = "";
-    updateDotsDisplay();
-}
-
-function validateCode() {
-    if (code === codeSecret) {
-    window.location.href = "page2.html";
-    } else {
-        document.getElementById("result").textContent = "Code incorrect";
-        clearCode();
+      code += num;
+      updateDotsDisplay();
     }
-}
+  }
 
-function updateDotsDisplay() {
-    document.getElementById("dotsDisplay").textContent = "●".repeat(code.length);
-}
+  function clearCode() {
+    code = "";
+    if (result) result.textContent = "";
+    updateDotsDisplay();
+  }
 
-function openLightbox(src) {
-    document.getElementById("lightbox-img").src = src;
-    document.getElementById("lightbox").style.display = "flex";
+  function validateCode() {
+    if (code === codeSecret) {
+      window.location.href = "page2.html";
+    } else {
+      if (result) result.textContent = "Code incorrect";
+      clearCode();
+    }
+  }
+
+  function updateDotsDisplay() {
+    if (dotsDisplay) {
+      dotsDisplay.textContent = "●".repeat(code.length);
+    }
+  }
+
+  function openLightbox(src) {
+    const img = document.getElementById("lightbox-img");
+    const box = document.getElementById("lightbox");
+    if (img && box) {
+      img.src = src;
+      box.style.display = "flex";
+    }
   }
 
   function closeLightbox() {
-    document.getElementById("lightbox").style.display = "none";
+    const box = document.getElementById("lightbox");
+    if (box) box.style.display = "none";
   }
 
-  // Ajoute un event à chaque image de la galerie
+  // 🔥 Correction ici (le point manquait)
   document.querySelectorAll(".galerie img").forEach(img => {
     img.style.cursor = "zoom-in";
     img.addEventListener("click", () => {
@@ -44,53 +58,49 @@ function openLightbox(src) {
     });
   });
 
-  const uploadInput = document.getElementById('upload');
-  const galerie = document.getElementById('galerie');
-
-  uploadInput.addEventListener('change', function () {
-    const file = this.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const newImg = document.createElement('img');
-      newImg.src = e.target.result;
-      newImg.alt = "Nouvelle photo";
-      galerie.appendChild(newImg);
-    };
-    reader.readAsDataURL(file);
-  });
-  const upload = document.getElementById('upload');
-  const galerie = document.getElementById('galerie');
-
-  // Charger les images stockées
-  window.addEventListener('load', () => {
+  // Charger les images sauvegardées
+  if (galerie) {
     const savedImages = JSON.parse(localStorage.getItem('images') || '[]');
     savedImages.forEach(src => {
       const img = document.createElement('img');
       img.src = src;
       galerie.appendChild(img);
     });
-  });
+  }
 
-  // Ajouter une nouvelle image
-  upload.addEventListener('change', function () {
-    const file = this.files[0];
-    if (!file) return;
+  // Upload image (UNE SEULE VERSION)
+  if (upload && galerie) {
+    upload.addEventListener('change', function () {
+      const file = this.files[0];
+      if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const src = e.target.result;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const src = e.target.result;
 
-      // Ajouter visuellement
-      const img = document.createElement('img');
-      img.src = src;
-      galerie.appendChild(img);
+        const img = document.createElement('img');
+        img.src = src;
+        img.style.cursor = "zoom-in";
 
-      // Sauvegarder
-      let saved = JSON.parse(localStorage.getItem('images') || '[]');
-      saved.push(src);
-      localStorage.setItem('images', JSON.stringify(saved));
-    };
-    reader.readAsDataURL(file);
-  });
+        img.addEventListener("click", () => {
+          openLightbox(src);
+        });
+
+        galerie.appendChild(img);
+
+        // sauvegarde
+        let saved = JSON.parse(localStorage.getItem('images') || '[]');
+        saved.push(src);
+        localStorage.setItem('images', JSON.stringify(saved));
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // rendre fonctions globales si utilisées dans HTML
+  window.appendNumber = appendNumber;
+  window.clearCode = clearCode;
+  window.validateCode = validateCode;
+  window.closeLightbox = closeLightbox;
+
+});
